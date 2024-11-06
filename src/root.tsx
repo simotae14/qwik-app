@@ -3,7 +3,7 @@ import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.
 import { RouterHead } from './components/router-head/router-head';
 
 import globalStyles from './global.css?inline';
-import { QwikPartytown } from './components/partytown/partytown';
+// import { QwikPartytown } from './components/partytown/partytown';
 
 export default component$(() => {
   /**
@@ -24,7 +24,7 @@ export default component$(() => {
       <body lang="en">
         <RouterOutlet />
         <ServiceWorkerRegister />
-        <QwikPartytown/>
+        {/* <QwikPartytown/> */}
       </body>
     </QwikCityProvider>
   );
