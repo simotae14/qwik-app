@@ -1,6 +1,7 @@
-import { component$, Resource } from "@builder.io/qwik";
+import { component$, Resource, useStylesScoped$ } from "@builder.io/qwik";
 import { useEndpoint, type RequestHandler } from "@builder.io/qwik-city";
 import { type Contact, CONTACTS } from "./fake-db";
+import CSS from './index.css?inline';
 
 export const onGet: RequestHandler<Contact[]> = async () => {
   // Pretend we are fetching data from a database.
@@ -10,6 +11,7 @@ export const onGet: RequestHandler<Contact[]> = async () => {
 };
 
 export default component$(() => {
+  useStylesScoped$(CSS);
   const endpoint = useEndpoint<typeof onGet>();
   return (
     <div>
@@ -21,7 +23,10 @@ export default component$(() => {
           return (
             <ul>
               {contacts.map((contact) => (
-                <li>{contact.name}</li>
+                <li>
+                  <img src={contact.avatar} alt={contact.name} />
+                  {contact.name}
+                </li>
               ))}
             </ul>
           );
