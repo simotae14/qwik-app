@@ -1,13 +1,23 @@
 import { component$, Resource, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import { useEndpoint, type RequestHandler } from "@builder.io/qwik-city";
-import { type Contact, CONTACTS } from "./fake-db";
+import { CONTACTS } from "./fake-db";
 import CSS from './index.css?inline';
 
-export const onGet: RequestHandler<Contact[]> = async () => {
+interface SimpleContact {
+  id: string;
+  name: string;
+  avatar?: string;
+}
+
+export const onGet: RequestHandler<SimpleContact[]> = async () => {
   // Pretend we are fetching data from a database.
   // you can also fake an async response
   // return await Promise.resolve(CONTACTS);
-  return CONTACTS;
+  return CONTACTS.map((contact) => ({ 
+    id: contact.id,
+    name: contact.name,
+    avatar: contact.avatar
+   }));
 };
 
 export default component$(() => {
