@@ -38,8 +38,10 @@ export default component$(() => {
             <ul>
               {contacts.filter((cont) => cont.name.toLowerCase().indexOf(filter.value.toLowerCase()) > -1).map((contact) => (
                 <li>
-                  <img src={contact.avatar} alt={contact.name} />
-                  {contact.name}
+                  <a href={"/contacts/" + contact.id + "/"}>
+                    <img src={contact.avatar} alt={contact.name} />
+                    {contact.name}
+                  </a>
                 </li>
               ))}
             </ul>
