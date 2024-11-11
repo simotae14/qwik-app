@@ -15,7 +15,7 @@ export const onGet: RequestHandler<ContactForm> = async (ctx) => {
   };
 };
 
-export const onPost: RequestHandler<ContactForm> = async ({ request }) => {
+export const onPost: RequestHandler<ContactForm> = async ({ request, response }) => {
   const formData = await request.formData();
   const contact: Contact = {
     id: formData.get('id') as string,
@@ -30,16 +30,24 @@ export const onPost: RequestHandler<ContactForm> = async ({ request }) => {
     errors: {},
   }
   // checks on the form data
-  isRequired(contact, 'name', data.errors)
+  const hasErrors = isRequired(contact, 'name', data.errors)
+  if (!hasErrors) {
+    // save contact to DB
+    const existingContact = CONTACTS.find((c) => c.id === contact.id);
+    existingContact &&  Object.assign(existingContact, contact);
+    // then redirect
+    throw response.redirect(`/contacts/${contact.id}/`);
+  }
   return data;
 };
 
 function isRequired(contact: Contact, field: keyof Contact, errors: Record<string, string>) {
   if (!contact[field]) {
     errors[field] = "The '" + field + "' is required";
-    return false;
+    console.log('errors', field);
+    return true;
   }
-  return true;
+  return false;
 }
 
 export default component$(() => {
@@ -54,6 +62,8 @@ export default component$(() => {
         const errors = data?.errors;
         return (
           <form method="post">
+            <input type="hidden" name="id" value={c.id} />
+            <input type="hidden" name="avatar" value={c.avatar} />
             <div class="contact">
               <a href={`/contacts/${c.id}/`}>cancel</a>
               <div class="row">
