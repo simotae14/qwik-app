@@ -16,6 +16,7 @@ export default component$(() => {
       onPending={() => <>loading...</>}
       onResolved={(c) => (
         <div class="contact">
+          <a href={`/contacts/${c.id}/edit`}>edit</a>
           <div class="row">
             <img class="avatar" src={c.avatar} alt={c.name} />
             <span>{c.name}</span>
