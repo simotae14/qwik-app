@@ -1,4 +1,4 @@
-import { component$, Slot } from '@builder.io/qwik';
+import { component$, Slot, useClientEffect$, useSignal } from '@builder.io/qwik';
 
 export default component$(() => {
   return (
@@ -13,7 +13,20 @@ export default component$(() => {
         <a href="https://www.builder.io/" target="_blank">
           Made with ♡ by Builder.io
         </a>
+        <Clock />
       </footer>
     </>
   );
+});
+
+export const Clock = component$(() => {
+  const timestamp = useSignal("");
+  useClientEffect$(() => {
+    function update() {
+      timestamp.value = new Date().toLocaleTimeString();
+    }
+    update();
+    setInterval(update, 1000);
+  });
+  return <div>{timestamp.value}</div>;
 });
