@@ -1,5 +1,5 @@
 import { component$, Resource, useSignal, useStylesScoped$ } from "@builder.io/qwik";
-import { useEndpoint, type RequestHandler } from "@builder.io/qwik-city";
+import { Link, useEndpoint, type RequestHandler } from "@builder.io/qwik-city";
 import { CONTACTS } from "./fake-db";
 import CSS from './index.css?inline';
 
@@ -38,10 +38,10 @@ export default component$(() => {
             <ul>
               {contacts.filter((cont) => cont.name.toLowerCase().indexOf(filter.value.toLowerCase()) > -1).map((contact) => (
                 <li>
-                  <a href={"/contacts/" + contact.id + "/"}>
+                  <Link href={"/contacts/" + contact.id + "/"}>
                     <img src={contact.avatar} alt={contact.name} />
                     {contact.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
