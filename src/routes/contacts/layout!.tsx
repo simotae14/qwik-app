@@ -1,4 +1,15 @@
 import { component$, Slot, useClientEffect$, useSignal } from '@builder.io/qwik';
+import type { RequestHandler } from '@builder.io/qwik-city';
+
+export const onRequest: RequestHandler = async ({
+  request,
+  response,
+  cookie,
+}) => {
+  if (!cookie.get('contact-login')) {
+    throw response.redirect('/login/?redirect=' + request.url);
+  }
+};
 
 export default component$(() => {
   return (
